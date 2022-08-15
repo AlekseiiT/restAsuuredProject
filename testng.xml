@@ -3,7 +3,7 @@
 <suite name="All Test Suite">
     <test thread-count="1" name="test">
         <classes>
-            <class name="org.example.AppTest"/>
+            <class name="org.example.TC0_Get_ListUsers"/>
         </classes>
     </test>
 </suite>
