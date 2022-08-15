@@ -28,8 +28,6 @@ public class TC0_Get_ListUsers
                 .header("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
         Response response = httpRequest.request(Method.GET, "/v3/timezone");
 
-        String responseBody = response.getBody().asString();
-
         //status code validation
         Assert.assertEquals(response.getStatusCode(), 200);
 
