@@ -4,6 +4,7 @@
     <test thread-count="1" name="test">
         <classes>
             <class name="org.example.TC0_Get_ListUsers"/>
+            <class name="org.example.TC1_POST_Create"/>
         </classes>
     </test>
 </suite>

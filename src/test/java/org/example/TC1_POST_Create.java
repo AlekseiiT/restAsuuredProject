@@ -5,15 +5,11 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.propertyUtils.PropertyUtils;
+import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-
-/**
- * Unit test for simple App.
- */
-public class TC0_Get_ListUsers
-{
+public class TC1_POST_Create {
     /**
      * Rigorous Test :-)
      */
@@ -23,14 +19,19 @@ public class TC0_Get_ListUsers
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
 
         RequestSpecification httpRequest = RestAssured
-                .given();
-        Response response = httpRequest.request(Method.GET, "/api/unknown");
+                .given()
+                .header("Content-Type", "application/json");
+
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("name", "morpheus");
+        requestParams.put("job", "leader");
+
+        httpRequest.body(requestParams.toJSONString());
+
+        Response response = httpRequest.request(Method.POST, "/api/users");
 
         System.out.println("Response body is: " + response.getBody().asString());
         //status code validation
-        Assert.assertEquals(response.getStatusCode(), 200);
-        //status line validation
-        Assert.assertEquals(response.getStatusLine(), "HTTP/1.1 200 OK");
+        Assert.assertEquals(response.getStatusCode(), 201);
     }
 }
-
