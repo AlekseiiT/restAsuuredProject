@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.example.propertyUtils.PropertyUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
@@ -20,12 +21,12 @@ public class TC0_Get_ListUsers
     @Test
     public void myFirstGetRequest()
     {
-        RestAssured.baseURI = "https://api-football-v1.p.rapidapi.com";
+        RestAssured.baseURI = PropertyUtils.getValue("base_url");
 
         RequestSpecification httpRequest = RestAssured
                 .given()
-                .header("X-RapidAPI-Key", "fff0fd0229msh57ca68841e897d2p10e266jsnadcb8497fca3")
-                .header("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
+                .header("X-RapidAPI-Key", PropertyUtils.getValue("secret_key"))
+                .header("X-RapidAPI-Host", PropertyUtils.getValue("api_host"));
         Response response = httpRequest.request(Method.GET, "/v3/timezone");
 
         //status code validation
