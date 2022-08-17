@@ -5,15 +5,14 @@ import io.restassured.http.Header;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.assertj.core.api.Assertions;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TC1_POST_Create {
-    /**
-     * Rigorous Test :-)
-     */
+
     @Test
     public void myFirstGetRequest()
     {
@@ -35,9 +34,29 @@ public class TC1_POST_Create {
         //status code validation
         Assert.assertEquals(response.getStatusCode(), 201);
 
+        for (Header header : response.headers()){
+            System.out.println(header.getName() + " : " + header.getValue());
+        }
+
         //headers validation
         Assert.assertEquals(response.header("Content-Type"),"application/json; charset=utf-8");
-        Assert.assertEquals(response.header("Content-Length"), "84");
+        Assertions.assertThat(Integer.parseInt(response.header("Content-Length")))
+                .isBetween(82,86);
 
+        //json validation
+        Assertions.assertThat((String) response.getBody().jsonPath().get("name"))
+                .isNotNull()
+                .isEqualTo("morpheus");
+
+        Assertions.assertThat((String) response.getBody().jsonPath().get("job"))
+                .isNotNull()
+                .isEqualTo("leader");
+
+        Assertions.assertThat(Integer.parseInt(response.getBody().jsonPath().get("id")))
+                .isBetween(1, 10000);
+
+        Assertions.assertThat((String) response.getBody().jsonPath().get("createdAt"))
+                .isNotNull()
+                .hasSize(24);
     }
 }

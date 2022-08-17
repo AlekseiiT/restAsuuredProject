@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.assertj.core.api.Assertions;
 import org.example.propertyUtils.PropertyUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -28,9 +29,11 @@ public class TC0_Get_ListUsers
 
         System.out.println("Response body is: " + response.getBody().asString());
         //status code validation
-        Assert.assertEquals(response.getStatusCode(), 200);
-        //status line validation
-        Assert.assertEquals(response.getStatusLine(), "HTTP/1.1 200 OK");
+
+        Assertions.assertThat(response.getStatusCode())
+                        .isEqualTo(200);
+        Assertions.assertThat(response.getStatusLine())
+                        .isEqualTo("HTTP/1.1 200 OK");
     }
 }
 
