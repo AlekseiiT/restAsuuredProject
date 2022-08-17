@@ -5,6 +5,7 @@
         <classes>
             <class name="org.example.TC0_Get_ListUsers"/>
             <class name="org.example.TC1_POST_Create"/>
+            <class name="org.example.TC2_POST_WITH_EXCEL_DATA_PROVIDER"/>
         </classes>
     </test>
 </suite>
