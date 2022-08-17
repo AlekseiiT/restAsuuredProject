@@ -1,6 +1,7 @@
 package org.example;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Header;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -33,5 +34,10 @@ public class TC1_POST_Create {
         System.out.println("Response body is: " + response.getBody().asString());
         //status code validation
         Assert.assertEquals(response.getStatusCode(), 201);
+
+        //headers validation
+        Assert.assertEquals(response.header("Content-Type"),"application/json; charset=utf-8");
+        Assert.assertEquals(response.header("Content-Length"), "84");
+
     }
 }
