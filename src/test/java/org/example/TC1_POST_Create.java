@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 public class TC1_POST_Create {
 
     @Test
-    public void myFirstGetRequest()
+    public void myFirstPostRequest()
     {
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
 
