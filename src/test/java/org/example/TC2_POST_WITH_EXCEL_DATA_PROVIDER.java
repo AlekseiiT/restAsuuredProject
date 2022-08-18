@@ -7,11 +7,13 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.assertj.core.api.Assertions;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -22,6 +24,9 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER {
     @Test(dataProvider = "dataProviderWithExcelWithMap")
     public void post_query_with_data_provider(Map<String, String> map)
     {
+        String name = map.get("name");
+        String job = map.get("job");
+
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
 
         RequestSpecification httpRequest = RestAssured
@@ -29,8 +34,9 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER {
                 .header("Content-Type", "application/json");
 
         JSONObject requestParams = new JSONObject();
-        requestParams.put("name", map.get("name"));
-        requestParams.put("job", map.get("job"));
+
+        requestParams.put("name", name);
+        requestParams.put("job", job);
 
         httpRequest.body(requestParams.toJSONString());
 
@@ -39,6 +45,14 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER {
         System.out.println("Response body is: " + response.getBody().asString());
         //status code validation
         Assert.assertEquals(response.getStatusCode(), 201);
+
+        Assertions.assertThat((String) response.getBody().jsonPath().get("name"))
+                .isNotNull()
+                .isEqualTo(name);
+
+        Assertions.assertThat((String) response.getBody().jsonPath().get("job"))
+                .isNotNull()
+                .isEqualTo(job);
     }
 
     @DataProvider
