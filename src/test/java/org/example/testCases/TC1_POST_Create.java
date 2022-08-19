@@ -5,11 +5,16 @@ import io.restassured.http.Method;
 import org.assertj.core.api.Assertions;
 import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
+import org.example.utilities.RestUtils;
 import org.json.simple.JSONObject;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class TC1_POST_Create extends TestBase {
+
+    String name = RestUtils.genString();
+    String job = RestUtils.genString();
+
     @BeforeClass
     public void postCreateAUser(){
         logger.info("*** Started TC1_post_create_a_user ***");
@@ -20,9 +25,11 @@ public class TC1_POST_Create extends TestBase {
                 .header("Content-Type", "application/json");
 
         JSONObject requestParams = new JSONObject();
-        requestParams.put("name", "morpheus");
-        requestParams.put("job", "leader");
+        requestParams.put("name", name);
+        requestParams.put("job", job);
         httpRequest.body(requestParams.toJSONString());
+
+       // System.out.println(RestUtils.genInt());
 
         response = httpRequest.request(Method.POST, "/api/users");
     }
@@ -40,29 +47,34 @@ public class TC1_POST_Create extends TestBase {
     public void TC1CheckHeaders(){
         logger.info("*** Checking headers ***");
         String contentType = response.header("Content-Type");
-        int contentLength = Integer.parseInt(response.header("Content-Length"));
         logger.info("Content-type header is " + contentType);
-        logger.info("Content-Length is " + contentLength);
         Assertions.assertThat(contentType)
                 .isNotNull()
                 .isEqualTo("application/json; charset=utf-8");
-        Assertions.assertThat(contentLength)
-                .isBetween(82,86);
     }
     @Test
     public void TC1JSONValidation(){
-        Assertions.assertThat((String) response.getBody().jsonPath().get("name"))
+        logger.info("*** Checking JSON body values ***");
+        String nameValue = (String) response.getBody().jsonPath().get("name");
+        logger.info("*** Response value for 'name' is " + nameValue);
+        Assertions.assertThat(nameValue)
                 .isNotNull()
-                .isEqualTo("morpheus");
+                .isEqualTo(name);
 
+        String jobValue = (String) response.getBody().jsonPath().get("job");
+        logger.info("*** Response value for 'job' is " + jobValue);
         Assertions.assertThat((String) response.getBody().jsonPath().get("job"))
                 .isNotNull()
-                .isEqualTo("leader");
+                .isEqualTo(job);
 
-        Assertions.assertThat(Integer.parseInt(response.getBody().jsonPath().get("id")))
+        int idValue = Integer.parseInt(response.getBody().jsonPath().get("id"));
+        logger.info("*** Response value for 'id' is " + idValue);
+        Assertions.assertThat(idValue)
                 .isBetween(1, 10000);
 
-        Assertions.assertThat((String) response.getBody().jsonPath().get("createdAt"))
+        String createdAtValue = (String) response.getBody().jsonPath().get("createdAt");
+        logger.info("*** Response value for 'createdAt' is " + createdAtValue);
+        Assertions.assertThat(createdAtValue)
                 .isNotNull()
                 .hasSize(24);
     }
