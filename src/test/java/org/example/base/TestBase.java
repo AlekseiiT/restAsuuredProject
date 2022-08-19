@@ -17,8 +17,6 @@ public class TestBase {
         logger = Logger.getLogger("ReqResAPI");
         PropertyConfigurator.configure("log4j.properties");
         logger.setLevel(Level.DEBUG);
-
-        System.out.println("heeey, base class");
     }
 
 }
