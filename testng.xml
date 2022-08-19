@@ -4,7 +4,7 @@
     <test verbose="2" preserve-order="true" name="C:/Users/user/IdeaProjects/restAsuuredProject">
         <classes>
             <class name="org.example.testCases.TC0_Get_ListUsers"/>
-<!--            <class name="org.example.testCases.TC1_POST_Create"/>-->
+            <class name="org.example.testCases.TC1_POST_Create"/>
 <!--            <class name="org.example.testCases.TC2_POST_WITH_EXCEL_DATA_PROVIDER"/>-->
         </classes>
     </test>

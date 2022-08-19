@@ -1,7 +1,6 @@
 package org.example.testCases;
 
 import io.restassured.RestAssured;
-import io.restassured.http.Header;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -10,41 +9,40 @@ import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class TC1_POST_Create extends TestBase {
-
-    @Test
-    public void myFirstPostRequest()
-    {
+    @BeforeClass
+    public void postCreateAUser(){
+        logger.info("**********************Started TC1_post_create_a_user*********************");
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
 
-        RequestSpecification httpRequest = RestAssured
+        httpRequest = RestAssured
                 .given()
                 .header("Content-Type", "application/json");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("name", "morpheus");
         requestParams.put("job", "leader");
-
         httpRequest.body(requestParams.toJSONString());
 
-        Response response = httpRequest.request(Method.POST, "/api/users");
+        response = httpRequest.request(Method.POST, "/api/users");
+    }
 
-        System.out.println("Response body is: " + response.getBody().asString());
-        //status code validation
+    @Test
+    public void TC1CheckStatusCode()
+    {
         Assert.assertEquals(response.getStatusCode(), 201);
-
-        for (Header header : response.headers()){
-            System.out.println(header.getName() + " : " + header.getValue());
-        }
-
-        //headers validation
+    }
+    @Test
+    public void TC1CheckHeaders(){
         Assert.assertEquals(response.header("Content-Type"),"application/json; charset=utf-8");
         Assertions.assertThat(Integer.parseInt(response.header("Content-Length")))
                 .isBetween(82,86);
-
-        //json validation
+    }
+    @Test
+    public void TC1JSONValidation(){
         Assertions.assertThat((String) response.getBody().jsonPath().get("name"))
                 .isNotNull()
                 .isEqualTo("morpheus");

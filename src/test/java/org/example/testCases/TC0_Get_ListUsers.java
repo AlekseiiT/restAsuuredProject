@@ -11,14 +11,12 @@ import org.testng.annotations.Test;
 public class TC0_Get_ListUsers extends TestBase
 {
     @BeforeClass
-    public void get_list() throws InterruptedException
+    public void get_list()
     {
-        logger.info("**********************Started TC01_list_unknown*********************");
+        logger.info("**********************Started TC0_list_unknown*********************");
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
         httpRequest = RestAssured.given();
         response = httpRequest.request(Method.GET, "/api/unknown");
-
-        Thread.sleep(3);
     }
 
     @Test
@@ -27,7 +25,6 @@ public class TC0_Get_ListUsers extends TestBase
         Assertions.assertThat(response.getStatusCode())
                 .isEqualTo(200);
     }
-
     @Test
     public void checkStatusLine01(){
         Assertions.assertThat(response.getStatusLine())
