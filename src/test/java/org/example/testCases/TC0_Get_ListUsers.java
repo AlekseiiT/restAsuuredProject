@@ -13,7 +13,7 @@ public class TC0_Get_ListUsers extends TestBase
     @BeforeClass
     public void get_list()
     {
-        logger.info("**********************Started TC0_list_unknown*********************");
+        logger.info("*** Started TC0_list_unknown ****");
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
         httpRequest = RestAssured.given();
         response = httpRequest.request(Method.GET, "/api/unknown");
@@ -21,13 +21,18 @@ public class TC0_Get_ListUsers extends TestBase
 
     @Test
     public void checkStatusCode01(){
-        System.out.println(response.getBody().asString());
-        Assertions.assertThat(response.getStatusCode())
+        logger.info("*** Checking Status Code ***");
+        int statusCode = response.getStatusCode();
+        logger.info("Status code is " + statusCode);
+        Assertions.assertThat(statusCode)
                 .isEqualTo(200);
     }
     @Test
     public void checkStatusLine01(){
-        Assertions.assertThat(response.getStatusLine())
+        logger.info("*** Checking Status Line ***");
+        String statusLine = response.getStatusLine();
+        logger.info("Status line is " + statusLine);
+        Assertions.assertThat(statusLine)
                 .isEqualTo("HTTP/1.1 200 OK");
     }
 }

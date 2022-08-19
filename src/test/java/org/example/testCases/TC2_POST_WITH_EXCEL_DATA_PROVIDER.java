@@ -12,6 +12,7 @@ import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
@@ -25,6 +26,7 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER extends TestBase {
     @Test(dataProvider = "dataProviderWithExcelWithMap")
     public void post_query_with_data_provider(Map<String, String> map)
     {
+        logger.info("*** Started TC2_POST_WITH_EXCEL_DATA_PROVIDER ****");
         String name = map.get("name");
         String job = map.get("job");
 
@@ -43,14 +45,20 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER extends TestBase {
 
         Response response = httpRequest.request(Method.POST, "/api/users");
 
-        System.out.println("Response body is: " + response.getBody().asString());
-        //status code validation
-        Assert.assertEquals(response.getStatusCode(), 201);
+        logger.info("*** Checking Status Code ***");
+        int statusCode = response.getStatusCode();
+        logger.info("Status code is " + statusCode);
+        Assertions.assertThat(statusCode).isEqualTo(201);
 
-        Assertions.assertThat((String) response.getBody().jsonPath().get("name"))
+        logger.info("*** Checking JSON body values ***");
+        String nameValue = (String) response.getBody().jsonPath().get("name");
+        logger.info("*** Response value for 'name' is " + nameValue);
+        Assertions.assertThat(nameValue)
                 .isNotNull()
                 .isEqualTo(name);
 
+        String jobValue = (String) response.getBody().jsonPath().get("job");
+        logger.info("*** Response value for 'job' is " + jobValue);
         Assertions.assertThat((String) response.getBody().jsonPath().get("job"))
                 .isNotNull()
                 .isEqualTo(job);
