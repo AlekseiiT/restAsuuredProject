@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.assertj.core.api.Assertions;
+import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
@@ -19,7 +20,7 @@ import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TC2_POST_WITH_EXCEL_DATA_PROVIDER {
+public class TC2_POST_WITH_EXCEL_DATA_PROVIDER extends TestBase {
 
     @Test(dataProvider = "dataProviderWithExcelWithMap")
     public void post_query_with_data_provider(Map<String, String> map)

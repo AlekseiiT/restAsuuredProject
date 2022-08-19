@@ -2,38 +2,36 @@ package org.example.testCases;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
+import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
-import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-
-/**
- * Unit test for simple App.
- */
-public class TC0_Get_ListUsers
+public class TC0_Get_ListUsers extends TestBase
 {
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void myFirstGetRequest()
+    @BeforeClass
+    public void get_list() throws InterruptedException
     {
+        logger.info("**********************Started TC01_list_unknown*********************");
         RestAssured.baseURI = PropertyUtils.getValue("base_url");
+        httpRequest = RestAssured.given();
+        response = httpRequest.request(Method.GET, "/api/unknown");
 
-        RequestSpecification httpRequest = RestAssured
-                .given();
-        Response response = httpRequest.request(Method.GET, "/api/unknown");
+        Thread.sleep(3);
+    }
 
-        System.out.println("Response body is: " + response.getBody().asString());
-        //status code validation
-
+    @Test
+    public void checkStatusCode01(){
+        System.out.println(response.getBody().asString());
         Assertions.assertThat(response.getStatusCode())
-                        .isEqualTo(200);
+                .isEqualTo(200);
+    }
+
+    @Test
+    public void checkStatusLine01(){
         Assertions.assertThat(response.getStatusLine())
-                        .isEqualTo("HTTP/1.1 200 OK");
+                .isEqualTo("HTTP/1.1 200 OK");
     }
 }
 

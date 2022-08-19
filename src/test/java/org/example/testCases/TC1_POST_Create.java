@@ -6,12 +6,13 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
+import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TC1_POST_Create {
+public class TC1_POST_Create extends TestBase {
 
     @Test
     public void myFirstPostRequest()
