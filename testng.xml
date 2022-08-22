@@ -6,6 +6,7 @@
             <class name="org.example.testCases.TC0_Get_ListUsers"/>
             <class name="org.example.testCases.TC1_POST_Create"/>
             <class name="org.example.testCases.TC2_POST_WITH_EXCEL_DATA_PROVIDER"/>
+            <class name="org.example.testCases.TC3_POST_Registration_Success"/>
         </classes>
     </test>
 </suite>
