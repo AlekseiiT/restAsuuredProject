@@ -5,6 +5,7 @@ import io.restassured.http.Method;
 import org.assertj.core.api.Assertions;
 import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ public class TC0_Get_ListUsers extends TestBase
     }
 
     @Test
-    public void checkStatusCode01(){
+    public void TC0_checkStatusCode01(){
         logger.info("*** Checking Status Code ***");
         int statusCode = response.getStatusCode();
         logger.info("Status code is " + statusCode);
@@ -28,12 +29,17 @@ public class TC0_Get_ListUsers extends TestBase
                 .isEqualTo(200);
     }
     @Test
-    public void checkStatusLine01(){
+    public void TC0_checkStatusLine01(){
         logger.info("*** Checking Status Line ***");
         String statusLine = response.getStatusLine();
         logger.info("Status line is " + statusLine);
         Assertions.assertThat(statusLine)
                 .isEqualTo("HTTP/1.1 200 OK");
+    }
+
+    @AfterClass
+    public void tearDown(){
+        logger.info("*** Finished TC0_Get_ListUsers ***");
     }
 }
 

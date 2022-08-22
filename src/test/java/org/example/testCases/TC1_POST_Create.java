@@ -7,6 +7,7 @@ import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.example.utilities.RestUtils;
 import org.json.simple.JSONObject;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -35,7 +36,7 @@ public class TC1_POST_Create extends TestBase {
     }
 
     @Test
-    public void TC1CheckStatusCode()
+    public void TC1_CheckStatusCode()
     {
         logger.info("*** Checking Status Code ***");
         int statusCode = response.getStatusCode();
@@ -44,7 +45,7 @@ public class TC1_POST_Create extends TestBase {
                 .isEqualTo(201);
     }
     @Test
-    public void TC1CheckHeaders(){
+    public void TC1_heckHeaders(){
         logger.info("*** Checking headers ***");
         String contentType = response.header("Content-Type");
         logger.info("Content-type header is " + contentType);
@@ -53,7 +54,7 @@ public class TC1_POST_Create extends TestBase {
                 .isEqualTo("application/json; charset=utf-8");
     }
     @Test
-    public void TC1JSONValidation(){
+    public void TC1_JSONValidation(){
         logger.info("*** Checking JSON body values ***");
         String nameValue = (String) response.getBody().jsonPath().get("name");
         logger.info("*** Response value for 'name' is " + nameValue);
@@ -77,5 +78,10 @@ public class TC1_POST_Create extends TestBase {
         Assertions.assertThat(createdAtValue)
                 .isNotNull()
                 .hasSize(24);
+    }
+
+    @AfterClass
+    public void tearDown(){
+        logger.info("*** Finished TC1_POST_Create ***");
     }
 }

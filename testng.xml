@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="C:/Users/user/IdeaProjects/restAsuuredProject">
+    <listeners>
+        <listener class-name="org.example.utilities.Listeners"/>
+    </listeners>
+    <test thread-count="5" name="C:/Users/user/IdeaProjects/restAsuuredProject">
         <classes>
             <class name="org.example.testCases.TC0_Get_ListUsers"/>
             <class name="org.example.testCases.TC1_POST_Create"/>

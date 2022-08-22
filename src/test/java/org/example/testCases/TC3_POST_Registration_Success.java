@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.json.simple.JSONObject;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class TC3_POST_Registration_Success extends TestBase {
     }
 
     @Test
-    public void TC3CheckStatusCode(){
+    public void TC3_CheckStatusCode(){
         logger.info("*** Checking Status Code ***");
         int statusCode = response.getStatusCode();
         logger.info("Status code is " + statusCode);
@@ -40,7 +41,7 @@ public class TC3_POST_Registration_Success extends TestBase {
     }
 
     @Test
-    public void TC3CheckHeaders(){
+    public void TC3_CheckHeaders(){
         logger.info("*** Checking headers ***");
         String contentType = response.header("Content-Type");
         logger.info("Content-type header is " + contentType);
@@ -50,7 +51,7 @@ public class TC3_POST_Registration_Success extends TestBase {
     }
 
     @Test
-    public void TC1JSONValidation() {
+    public void TC3_JSONValidation() {
         logger.info("*** Checking JSON body values ***");
         int idValue = response.getBody().jsonPath().getInt("id");
         logger.info("*** Response value for 'id' is " + idValue);
@@ -62,5 +63,10 @@ public class TC3_POST_Registration_Success extends TestBase {
         Assertions.assertThat(tokenValue)
                 .isNotNull()
                 .hasSize(17);
+    }
+
+    @AfterClass
+    public void tearDown(){
+        logger.info("*** Finished TC3_POST_Registration_Success ***");
     }
 }

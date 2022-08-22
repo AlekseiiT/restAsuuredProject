@@ -9,6 +9,7 @@ import org.example.base.TestBase;
 import org.example.propertyUtils.PropertyUtils;
 import org.example.utilities.RestUtils;
 import org.json.simple.JSONObject;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 public class TC2_POST_WITH_EXCEL_DATA_PROVIDER extends TestBase {
 
     @Test(dataProvider = "dataProviderWithExcelWithMap")
-    public void post_query_with_data_provider(Map<String, String> map)
+    public void TC2_post_query_with_data_provider(Map<String, String> map)
     {
         logger.info("*** Started TC2_POST_WITH_EXCEL_DATA_PROVIDER ****");
         String name = map.get("name");
@@ -60,5 +61,10 @@ public class TC2_POST_WITH_EXCEL_DATA_PROVIDER extends TestBase {
     @DataProvider
     public Object[][] dataProviderWithExcelWithMap(){
         return RestUtils.getDataFromExcel("/src/test/resources/inputValues.xlsx", "Sheet1");
+    }
+
+    @AfterClass
+    public void tearDown(){
+        logger.info("*** Finished TC2_POST_WITH_EXCEL_DATA_PROVIDER ***");
     }
 }
